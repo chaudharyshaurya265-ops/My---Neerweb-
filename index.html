@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Website Hub</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #e0f2fe;
+    color: #172554;
+    text-align: center;
+}
+
+header {
+    background: #1d4ed8;
+    color: white;
+    padding: 25px;
+}
+
+h1 { font-size: 32px; }
+
+section {
+    background: white;
+    max-width: 650px;
+    margin: 22px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px #0002;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover { background: #1e40af; }
+
+.back { background: #475569; }
+.danger { background: #dc2626; }
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.menu button {
+    min-height: 75px;
+    font-size: 17px;
+}
+
+input {
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #93c5fd;
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 12px;
+}
+
+.calculator {
+    max-width: 320px;
+    margin: auto;
+    padding: 15px;
+    background: #f1f5f9;
+    border-radius: 15px;
+}
+
+#display {
+    width: 100%;
+    height: 55px;
+    text-align: right;
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+}
+
+.keys button {
+    margin: 0;
+    padding: 15px 5px;
+    font-size: 20px;
+}
+
+.game-input {
+    width: 85%;
+    max-width: 260px;
+}
+
+#gameMessage {
+    min-height: 30px;
+}
+
+.clock {
+    font-size: clamp(35px, 9vw, 65px);
+    font-weight: bold;
+    color: #2563eb;
+    margin: 25px 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.date {
+    font-size: 20px;
+    color: #475569;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.cell {
+    width: 100%;
+    aspect-ratio: 1;
+    margin: 0;
+    font-size: 42px;
+    font-weight: bold;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.cell:hover { background: #bfdbfe; }
+
+.choices {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.choices button {
+    font-size: 22px;
+    min-width: 90px;
+    padding: 18px 12px;
+}
+
+.score {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+footer {
+    padding: 20px;
+    color: #475569;
+}
+
+@media(max-width: 480px) {
+    section { margin: 12px; padding: 18px; }
+    .menu button { font-size: 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME PAGE -->
+
+<div id="homePage" class="page active">
+
+<header>
+    <h1>Welcome to My Website!</h1>
+    <p>My Personal Website & Gaming Hub</p>
+</header>
+
+<section>
+    <h2>About Me</h2>
+    <p>Hello! I am learning HTML, CSS and JavaScript.</p>
+</section>
+
+<section>
+    <h2>My Hobbies</h2>
+    <ul style="display:inline-block;text-align:left">
+        <li>Playing Cricket</li>
+        <li>Listening to Music</li>
+        <li>Learning Coding</li>
+    </ul>
+</section>
+
+<section>
+    <h2>My Favourite Website</h2>
+    <a href="https://www.google.com" target="_blank">Visit Google</a>
+</section>
+
+<section>
+    <h2>My First Image</h2>
+    <img src="https://picsum.photos/500/250" alt="Random picture">
+</section>
+
+<section>
+    <h2>My Projects & Games</h2>
+    <p>Select any feature to open:</p>
+
+    <div class="menu">
+        <button onclick="showPage('calculatorPage')">🧮 Calculator</button>
+        <button onclick="showPage('guessPage')">🔢 Guess Number</button>
+        <button onclick="startTicTacToe()">❌ Tic-Tac-Toe</button>
+        <button onclick="showPage('rpsPage')">✊ Rock Paper Scissors</button>
+        <button onclick="showPage('clockPage')">🕒 Digital Clock</button>
+    </div>
+</section>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div id="calculatorPage" class="page">
+
+<header>
+    <h1>🧮 My Calculator</h1>
+</header>
+
+<section>
+    <div class="calculator">
+        <input id="display" type="text" placeholder="0" readonly>
+
+        <div class="keys">
+            <button onclick="addValue('7')">7</button>
+            <button onclick="addValue('8')">8</button>
+            <button onclick="addValue('9')">9</button>
+            <button onclick="addValue('/')">÷</button>
+
+            <button onclick="addValue('4')">4</button>
+            <button onclick="addValue('5')">5</button>
+            <button onclick="addValue('6')">6</button>
+            <button onclick="addValue('*')">×</button>
+
+            <button onclick="addValue('1')">1</button>
+            <button onclick="addValue('2')">2</button>
+            <button onclick="addValue('3')">3</button>
+            <button onclick="addValue('-')">−</button>
+
+            <button onclick="addValue('0')">0</button>
+            <button onclick="addValue('.')">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="addValue('+')">+</button>
+        </div>
+
+        <button class="danger" onclick="clearDisplay()">Clear</button>
+    </div>
+
+    <button class="back" onclick="goHome()">← Back to Home</button>
+</section>
+</div>
+
+
+<!-- NUMBER GUESSING GAME -->
+
+<div id="guessPage" class="page">
+
+<header>
+    <h1>🔢 Number Guessing Game</h1>
+</header>
+
+<section>
+    <h2>Guess the Secret Number</h2>
+    <p>Computer has selected a number between 1 and 100.</p>
+
+    <input id="guessInput" class="game-input"
+        type="number" min="1" max="100"
+        placeholder="Enter your number">
+
+    <br><br>
+
+    <button onclick="checkGuess()">Submit Guess</button>
+    <button class="danger" onclick="resetGuess()">New Game</button>
+
+    <h3 id="gameMessage">Start guessing!</h3>
+    <p>Attempts: <span id="attempts">0</span></p>
+
+    <button class="back" onclick="goHome()">← Back to Home</button>
+</section>
+</div>
+
+
+<!-- TIC TAC TOE GAME -->
+
+<div id="ticPage" class="page">
+
+<header>
+    <h1>❌ Tic-Tac-Toe</h1>
+    <p>Two Player Game</p>
+</header>
+
+<section>
+    <h2>Play with your friend!</h2>
+
+    <h3 id="ticMessage">Player X's Turn</h3>
+
+    <div class="board">
+        <button class="cell" onclick="ticMove(0)"></button>
+        <button class="cell" onclick="ticMove(1)"></button>
+        <button class="cell" onclick="ticMove(2)"></button>
+        <button class="cell" onclick="ticMove(3)"></button>
+        <button class="cell" onclick="ticMove(4)"></button>
+        <button class="cell" onclick="ticMove(5)"></button>
+        <button class="cell" onclick="ticMove(6)"></button>
+        <button class="cell" onclick="ticMove(7)"></button>
+        <button class="cell" onclick="ticMove(8)"></button>
+    </div>
+
+    <button onclick="resetTic()">Restart Game</button>
+    <button class="back" onclick="goHome()">← Back to Home</button>
+</section>
+</div>
+
+
+<!-- ROCK PAPER SCISSORS -->
+
+<div id="rpsPage" class="page">
+
+<header>
+    <h1>✊ Rock Paper Scissors</h1>
+</header>
+
+<section>
+    <h2>Choose Your Move</h2>
+    <p>Play against the computer!</p>
+
+    <div class="choices">
+        <button onclick="playRPS('Rock')">✊ Rock</button>
+        <button onclick="playRPS('Paper')">✋ Paper</button>
+        <button onclick="playRPS('Scissors')">✌️ Scissors</button>
+    </div>
+
+    <h3 id="rpsMessage">Make your choice!</h3>
+    <p id="rpsDetails"></p>
+
+    <div class="score">
+        <p>🏆 Your Score: <span id="yourScore">0</span></p>
+        <p>💻 Computer Score: <span id="computerScore">0</span></p>
+    </div>
+
+    <button class="danger" onclick="resetRPS()">Reset Score</button>
+    <button class="back" onclick="goHome()">← Back to Home</button>
+</section>
+</div>
+
+
+<!-- DIGITAL CLOCK -->
+
+<div id="clockPage" class="page">
+
+<header>
+    <h1>🕒 Digital Clock</h1>
+</header>
+
+<section>
+    <h2>Current Time</h2>
+
+    <div class="clock" id="clock">00:00:00</div>
+
+    <div class="date" id="date">Loading date...</div>
+
+    <p>Your computer's local time</p>
+
+    <button class="back" onclick="goHome()">← Back to Home</button>
+</section>
+</div>
+
+
+<footer>
+    <p>Created by Me | Learning Web Development</p>
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+// PAGE NAVIGATION
+
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    window.scrollTo(0, 0);
+}
+
+function goHome() {
+    showPage("homePage");
+}
+
+
+// CALCULATOR
+
+function addValue(value) {
+    let display = document.getElementById("display");
+
+    if (display.value === "Error") {
+        display.value = "";
+    }
+
+    display.value += value;
+}
+
+function calculate() {
+    let display = document.getElementById("display");
+
+    try {
+        if (!/^[0-9+\-*/.() ]+$/.test(display.value)) {
+            throw new Error("Invalid");
+        }
+
+        let result = Function(
+            '"use strict"; return (' + display.value + ')'
+        )();
+
+        if (!Number.isFinite(result)) {
+            throw new Error("Invalid");
+        }
+
+        display.value = result;
+
+    } catch {
+        display.value = "Error";
+    }
+}
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+}
+
+
+// NUMBER GUESSING GAME
+
+let secretNumber = randomNumber();
+let guessAttempts = 0;
+let guessOver = false;
+
+function randomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+}
+
+function checkGuess() {
+    if (guessOver) return;
+
+    let input = document.getElementById("guessInput");
+    let guess = Number(input.value);
+    let message = document.getElementById("gameMessage");
+
+    if (
+        input.value.trim() === "" ||
+        !Number.isInteger(guess) ||
+        guess < 1 || guess > 100
+    ) {
+        message.innerText = "Enter a number from 1 to 100!";
+        return;
+    }
+
+    guessAttempts++;
+
+    document.getElementById("attempts").innerText = guessAttempts;
+
+    if (guess === secretNumber) {
+        message.innerText = "🎉 Congratulations! You Won!";
+        guessOver = true;
+    } else if (guess < secretNumber) {
+        message.innerText = "📈 Too Low! Try a Bigger Number.";
+    } else {
+        message.innerText = "📉 Too High! Try a Smaller Number.";
+    }
+
+    input.value = "";
+}
+
+function resetGuess() {
+    secretNumber = randomNumber();
+    guessAttempts = 0;
+    guessOver = false;
+
+    document.getElementById("attempts").innerText = "0";
+    document.getElementById("gameMessage").innerText = "Start guessing!";
+    document.getElementById("guessInput").value = "";
+}
+
+
+// TIC TAC TOE
+
+let ticBoard = ["", "", "", "", "", "", "", "", ""];
+let ticPlayer = "X";
+let ticFinished = false;
+
+const winPatterns = [
+    [0,1,2], [3,4,5], [6,7,8],
+    [0,3,6], [1,4,7], [2,5,8],
+    [0,4,8], [2,4,6]
+];
+
+function startTicTacToe() {
+    showPage("ticPage");
+    resetTic();
+}
+
+function ticMove(index) {
+    if (ticFinished || ticBoard[index] !== "") {
+        return;
+    }
+
+    ticBoard[index] = ticPlayer;
+
+    let cells = document.querySelectorAll(".cell");
+    cells[index].innerText = ticPlayer;
+
+    let winner = null;
+
+    for (let pattern of winPatterns) {
+        const [a, b, c] = pattern;
+
+        if (
+            ticBoard[a] &&
+            ticBoard[a] === ticBoard[b] &&
+            ticBoard[a] === ticBoard[c]
+        ) {
+            winner = ticPlayer;
+            break;
+        }
+    }
+
+    if (winner) {
+        document.getElementById("ticMessage").innerText =
+            "🎉 Player " + winner + " Wins!";
+        ticFinished = true;
+        return;
+    }
+
+    if (!ticBoard.includes("")) {
+        document.getElementById("ticMessage").innerText =
+            "🤝 It's a Draw!";
+        ticFinished = true;
+        return;
+    }
+
+    ticPlayer = ticPlayer === "X" ? "O" : "X";
+
+    document.getElementById("ticMessage").innerText =
+        "Player " + ticPlayer + "'s Turn";
+}
+
+function resetTic() {
+    ticBoard = ["", "", "", "", "", "", "", "", ""];
+    ticPlayer = "X";
+    ticFinished = false;
+
+    document.querySelectorAll(".cell").forEach(cell => {
+        cell.innerText = "";
+    });
+
+    document.getElementById("ticMessage").innerText =
+        "Player X's Turn";
+}
+
+
+// ROCK PAPER SCISSORS
+
+let yourScore = 0;
+let computerScore = 0;
+
+function playRPS(userChoice) {
+    const options = ["Rock", "Paper", "Scissors"];
+
+    const computerChoice =
+        options[Math.floor(Math.random() * 3)];
+
+    let result = "";
+
+    if (userChoice === computerChoice) {
+        result = "It's a Draw!";
+    } else if (
+        (userChoice === "Rock" && computerChoice === "Scissors") ||
+        (userChoice === "Paper" && computerChoice === "Rock") ||
+        (userChoice === "Scissors" && computerChoice === "Paper")
+    ) {
+        result = "🎉 You Win!";
+        yourScore++;
+    } else {
+        result = "💻 Computer Wins!";
+        computerScore++;
+    }
+
+    document.getElementById("rpsMessage").innerText = result;
+
+    document.getElementById("rpsDetails").innerText =
+        "You chose " + userChoice +
+        " | Computer chose " + computerChoice;
+
+    document.getElementById("yourScore").innerText = yourScore;
+
+    document.getElementById("computerScore").innerText = computerScore;
+}
+
+function resetRPS() {
+    yourScore = 0;
+    computerScore = 0;
+
+    document.getElementById("yourScore").innerText = "0";
+    document.getElementById("computerScore").innerText = "0";
+
+    document.getElementById("rpsMessage").innerText =
+        "Make your choice!";
+
+    document.getElementById("rpsDetails").innerText = "";
+}
+
+
+// DIGITAL CLOCK
+
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").innerText =
+        now.toLocaleTimeString("en-IN");
+
+    document.getElementById("date").innerText =
+        now.toLocaleDateString("en-IN", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+</script>
+
+</body>
+</html>
+
